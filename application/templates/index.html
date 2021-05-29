@@ -1,45 +1,61 @@
 <html>
     <head>
-        
+        <link rel="stylesheet" href=" {{ url_for('static' ,filename='css/index.css') }}">
     </head>
     <body>
-        <form action = "{{ url_for('hello_world') }}" method="POST">
-            <label>N : </label>
-            <input type="Number" min=0 max=150 name='N'><br>
-            <label>P : </label>
-            <input type="Number" min=0 max=150 name='P'><br>
-            <label>K : </label>
-            <input type="Number" min=0 max=210 name='K'><br>
-            <label>Temperature : </label>
-            <input type="Number" min=5 max=50 name='Temperature'><br>
-            <label>Humidity : </label>
-            <input type="Number" min=10 max=100 name='Humidity'><br>
-            <label>PH : </label>
-            <input type="Number" min=0 max=10 name='PH'><br>
-            <label>Rainfall : </label>
-            <input type="Number" min=10 max=300 name='Rainfall'><br>
-            <input type="submit">
-        </form>
+        <div class='wrap'>
+            <form action = "{{ url_for('hello_world') }}" method="POST">
+                <label>N : </label>
+                <input type="Number" min=0 max=150 name='N'><br>
+                <label>P : </label>
+                <input type="Number" min=0 max=150 name='P'><br>
+                <label>K : </label>
+                <input type="Number" min=0 max=210 name='K'><br>
+                <label>Temperature : </label>
+                <input type="Number" min=5 max=50 name='Temperature'><br>
+                <label>Humidity : </label>
+                <input type="Number" min=10 max=100 name='Humidity'><br>
+                <label>PH : </label>
+                <input type="Number" min=0 max=10 name='PH'><br>
+                <label>Rainfall : </label>
+                <input type="Number" min=10 max=300 name='Rainfall'><br>
+                <input type="submit">
+            </form>
+        </div>
         {% if content %}
-        <p>
-            Model Suggession : {{ content['label'] }}<br>
-        </p>
-        <table>
-            <tr>
-                <th> Crop Name </th>
-                <th> Predicted Probability </th>
-            </tr>
-            {% for i, j in content['probability'].items() %}
-            <tr>
-                <td>{{ i }}</td>
-                <td>{{ j }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <p>
-            {{ url_for('static', filename=content['plot_path']) }}
-        </p>
-        <img src="{{ url_for('static', filename=content['plot_path']) }}">
+        
+        <h2 class="res_line">
+            Model Suggession : <b>{{ content['label'] }}</b>
+        </h2>
+        <div class='results'>
+            <table class='table'>
+                <tr>
+                    <th> Feature Name </th>
+                    <th> Provided Value </th>
+                </tr>
+                {% for i, j in content['feature_names'] | zip(content['original_input']) %}
+                <tr>
+                    <td>{{ i }}</td>
+                    <td>{{ j }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class='results'>
+            <table class='table'>
+                <tr>
+                    <th> Crop Name </th>
+                    <th> Predicted Probability </th>
+                </tr>
+                {% for i, j in content['probability'].items() %}
+                <tr>
+                    <td>{{ i }}</td>
+                    <td>{{ j }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <img src="{{ url_for('static', filename=content['plot_path']) }}">
+        </div>
         {% endif %}
     </body>
 </html>

@@ -1,0 +1,55 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <h1>
+            Classification Of Leaf
+        </h1>
+        <div id="flash_div">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" id="flash_msg" role="alert">
+                  <li>{{ message }}</li>
+                    </div>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+        </div>
+        <form action="{{ url_for('classification') }}" method="POST" enctype="multipart/form-data" runat="server">
+            <input accept="image/*" name='file' type='file' id='imgInp'><br>
+            <img id="blah" src="#" alt="your image" /><br>
+            <input type=submit value=Upload><br>
+        </form>
+        {% if content %}
+        <img src="{{ url_for('static', filename=content['final_filename']) }}">
+        <h2 class="res_line">Predicted label for the model is <b>{{ content['label']}}</b> </h2>
+        <img src="{{ url_for('static', filename=content['plot_path']) }}">
+        <table>
+            <tr>
+                <th> Leaf Label </th>
+                <th> Predicted Weight </th>
+            </tr>
+            {% for i, j in content['all_prob'].items() %}
+            <tr>
+                <td>{{ i }}</td>
+                <td>{{ j }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        <script>
+          var imgInp = document.getElementById("imgInp");
+          var blah = document.getElementById("blah");
+          imgInp.onchange = evt => {
+          const [file] = imgInp.files
+          if (file) {
+            blah.src = URL.createObjectURL(file)
+          }
+        }
+        </script>
+    </body>
+</html>

@@ -7,7 +7,7 @@ class CropRec(object):
 
     def __init__(self):
         cwd = os.getcwd()
-        self.model_path = os.path.join(cwd, 'model.pkl')
+        self.model_path = os.path.join(cwd, 'models/model.pkl')
         self.all_labels = ['apple', 'banana', 'blackgram',
                            'chickpea',
                            'coconut',

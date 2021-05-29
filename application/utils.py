@@ -10,8 +10,8 @@ def generate_radom_string(N=7):
     return res
 
 
-def plot_graph(prob_dict):
-    _ = plt.figure(tight_layout=True)
+def plot_graph(prob_dict, title=None, size=None):
+    _ = plt.figure(tight_layout=True, figsize=size)
     # fig.add_axes([0, 0, 1, 1])
     labels = []
     values = []
@@ -25,5 +25,11 @@ def plot_graph(prob_dict):
     saved_img = 'application/static/' + img_name
     base_path = os.path.join(os.getcwd(), saved_img)
     # saved_img = os.path.join(base_path, saved_img)
+    if title:
+        plt.title(title)
     plt.savefig(base_path)
     return img_name
+
+
+def preprocess_img(path):
+    pass
