@@ -93,6 +93,8 @@ def classification():
             content['label'] = label
             content['plot_path'] = plot_path
             content['all_prob'] = all_prob
+            # construct the absoule path 
+            # final_filename = './../upload_dir/' + new_filename
             content['final_filename'] = final_filename
             return render_template("classification.html", content=content)
         else:
